@@ -1,6 +1,10 @@
 <?php
 
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/project', function () {
+    return view('projects');
+});
+
+Route::post('/email', [EmailController::class, 'index']);
