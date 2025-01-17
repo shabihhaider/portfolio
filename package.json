@@ -6,10 +6,10 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "axios": "^1.6.4",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "axios": "^1.7.9",
         "laravel-vite-plugin": "^1.0.0",
-        "vite": "^5.0.0",
-        "@vitejs/plugin-vue": "^4.0.0"
+        "vite": "^5.0.0"
     },
     "dependencies": {
         "jQuery": "^1.7.4"
