@@ -1,5 +1,3 @@
-import { type SharedData } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/react';
 import { Navbar } from '@/components/Navbar';
 import About from '@/components/About';
 import Section from '@/components/Section';
@@ -8,7 +6,6 @@ import Skills from '@/components/Skills';
 import Education from '@/components/Education';
 import Services from '@/components/Services';
 import Contact from '@/components/Contact';
-//import Testimonials from '@/components/Testimonials';
 
 export default function Welcome() { 
     return (
@@ -38,10 +35,6 @@ export default function Welcome() {
             <Section name="contact">
                 <Contact>Contact</Contact>
             </Section>
-
-            {/* <Section name="testimonials">
-                <Testimonials>Testimonials</Testimonials>
-            </Section> */}
         </>
     );
 }
