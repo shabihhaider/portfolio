@@ -1,15 +1,15 @@
 import './bootstrap';
 import $ from 'jquery';
 
-$(document).ready(function () {
+$(function() {
     
     // Toggle the dropdown menu for categories
-    $(".category-btn").click(function() {
+    $(".category-btn").on('click', function() {
         $(".dropdown-menu").toggle(); // Show or hide the dropdown
     });
 
     // Filter projects by selected category
-    $(".category-option").click(function() {
+    $(".category-option").on('click', function() {
         var category = $(this).data("category");
 
         // Hide the dropdown after selection
@@ -46,14 +46,11 @@ $(document).ready(function () {
 
 
     // On hover over the card, show the project description
-    $(".card").hover(
-        function() {
-            $(this).find(".project-description").stop().fadeIn(300);
-        },
-        function() {
-            $(this).find(".project-description").stop().fadeOut(300);
-        }
-    );
+    $(".card").on('mouseenter', function() {
+        $(this).find(".project-description").stop().fadeIn(300);
+    }).on('mouseleave', function() {
+        $(this).find(".project-description").stop().fadeOut(300);
+    });
 
     // Handle form submission
     $('form').on('submit', function (event) {
@@ -136,4 +133,3 @@ $(document).ready(function () {
     });
 
 });
-
