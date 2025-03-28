@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import SocialMediaLinks from '@/components/Social-media-links'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const ContactForm = () => {
         message: ''
     })
     const [errors, setErrors] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
 
     const validateForm = () => {
         const newErrors = {}
@@ -32,11 +35,50 @@ const ContactForm = () => {
         return Object.keys(newErrors).length === 0
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (validateForm()) {
-            // Handle form submission here
-            console.log('Form submitted:', formData)
+        if (!validateForm()) return
+
+        setIsLoading(true)
+        const loadingToast = toast.loading('Sending your message...')
+
+        try {
+            const response = await axios.post('/email', formData)
+            if (response.data && response.status === 200) {
+                toast.success('Message sent successfully!', {
+                    id: loadingToast,
+                    duration: 3000,
+                    style: {
+                        background: '#10B981',
+                        color: '#fff',
+                    },
+                    iconTheme: {
+                        primary: '#fff',
+                        secondary: '#10B981',
+                    },
+                })
+                setFormData({ name: '', email: '', message: '' })
+            }
+        } catch (error) {
+            toast.error('Failed to send message. Please try again.', {
+                id: loadingToast,
+                duration: 3000,
+                style: {
+                    background: '#EF4444',
+                    color: '#fff',
+                },
+                iconTheme: {
+                    primary: '#fff',
+                    secondary: '#EF4444',
+                },
+            })
+            if (error.response?.data?.errors) {
+                setErrors(error.response.data.errors)
+            } else if (error.response?.data?.error) {
+                setErrors({ general: error.response.data.error })
+            }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -89,9 +131,12 @@ const ContactForm = () => {
 
                 <button 
                     type="submit"
-                    className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                    disabled={isLoading}
+                    className={`mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors ${
+                        isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                 >
-                    Send Message
+                    {isLoading ? 'Sending...' : 'Send Message'}
                 </button>
             </form>
 

@@ -6,8 +6,8 @@ const Skills = ({ children }) => {
     <div className='skills-section'>
         <h2>{children}</h2>
 
-        <div class="skills-container">
-            <div class="skills-slider">
+        <div className="skills-container">
+            <div className="skills-slider">
                 {/* Programming Languages */}
                 <SkillItem img="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="C" skill="C" />
                 <SkillItem img="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="C++" skill="C++" />

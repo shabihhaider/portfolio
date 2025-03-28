@@ -5,9 +5,9 @@ const Services = ({ children }) => {
   return (
     <div className='services-section'>
         <h2>{children}</h2>
-        <p class="section-subtitle">These are some of the services I offer. Reach out to me if I can help you with any!</p>
+        <p className="section-subtitle">These are some of the services I offer. Reach out to me if I can help you with any!</p>
 
-        <div class="services-container">
+        <div className="services-container">
             <ServiceCard icon_class="fas fa-laptop-code" >Programming</ServiceCard>
             <ServiceCard icon_class="fas fa-globe">Web Development</ServiceCard>
             <ServiceCard icon_class="fas fa-database">Database Management</ServiceCard>

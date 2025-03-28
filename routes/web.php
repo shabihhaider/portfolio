@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\EmailController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -14,7 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::resource('testimonials', TestimonialController::class);
+Route::post('/email', [EmailController::class, 'sendEmail']);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

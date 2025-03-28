@@ -274,7 +274,7 @@ nav {
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Image Container */
@@ -745,12 +745,12 @@ nav {
     justify-content: center;
     align-items: center;
     color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .service-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 10px 20px var(--link-hover);
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .service-card .icon {
@@ -761,6 +761,14 @@ nav {
 .service-card h3 {
     font-size: 1rem;
     text-transform: capitalize;
+}
+
+.service-icon {
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: rotate(360deg);
 }
 
 /* Responsive Design */
