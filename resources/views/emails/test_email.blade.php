@@ -64,7 +64,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="margin: 0;">{{ e($details['subject']) }}</h1>
+            <h1 style="margin: 0;">{{ $details['subject'] }}</h1>
         </div>
         
         <div class="content">
