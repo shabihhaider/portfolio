@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from '@/Components/ui/button';
-import { Input } from '@/Components/ui/input';
-import { Label } from '@/Components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Head, useForm } from '@inertiajs/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function Register() {
+export default function ResetPassword({ token, email }: { token: string, email: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
+        token: token,
+        email: email,
         password: '',
         password_confirmation: '',
     });
@@ -21,42 +21,25 @@ export default function Register() {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('register'));
+        post(route('password.store'));
     };
 
     return (
         <>
-            <Head title="Register" />
+            <Head title="Reset Password" />
 
             <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
                 <Card className="w-full sm:max-w-md">
                     <CardHeader>
-                        <CardTitle>Register</CardTitle>
+                        <CardTitle>Reset Password</CardTitle>
                         <CardDescription>
-                            Create a new account to get started
+                            Enter your new password below to reset your password.
                         </CardDescription>
                     </CardHeader>
 
                     <CardContent>
                         <form onSubmit={submit}>
                             <div>
-                                <Label htmlFor="name">Name</Label>
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    value={data.name}
-                                    className="mt-1 block w-full"
-                                    autoComplete="name"
-                                    isFocused={true}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                />
-                                {errors.name && (
-                                    <div className="text-red-500 text-sm mt-1">{errors.name}</div>
-                                )}
-                            </div>
-
-                            <div className="mt-4">
                                 <Label htmlFor="email">Email</Label>
                                 <Input
                                     id="email"
@@ -105,18 +88,10 @@ export default function Register() {
                             </div>
 
                             <div className="flex items-center justify-end mt-4">
-                                <Link
-                                    href={route('login')}
-                                    className="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Already registered?
-                                </Link>
-
                                 <Button
-                                    className="ml-4"
                                     disabled={processing}
                                 >
-                                    Register
+                                    Reset Password
                                 </Button>
                             </div>
                         </form>
@@ -125,4 +100,4 @@ export default function Register() {
             </div>
         </>
     );
-}
+} 
