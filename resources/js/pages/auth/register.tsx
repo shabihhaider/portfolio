@@ -1,128 +1,119 @@
-import { useEffect } from 'react';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from '@/Components/ui/button';
-import { Input } from '@/Components/ui/input';
-import { Label } from '@/Components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Head, useForm } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import { FormEventHandler } from 'react';
+
+import InputError from '@/components/input-error';
+import TextLink from '@/components/text-link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import AuthLayout from '@/layouts/auth-layout';
+
+type RegisterForm = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+};
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
     });
 
-    useEffect(() => {
-        return () => {
-            reset('password', 'password_confirmation');
-        };
-    }, []);
-
-    const submit = (e: React.FormEvent) => {
+    const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post(route('register'));
+        post(route('register'), {
+            onFinish: () => reset('password', 'password_confirmation'),
+        });
     };
 
     return (
-        <>
+        <AuthLayout title="Create an account" description="Enter your details below to create your account">
             <Head title="Register" />
+            <form className="flex flex-col gap-6" onSubmit={submit}>
+                <div className="grid gap-6">
+                    <div className="grid gap-2">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            id="name"
+                            type="text"
+                            required
+                            autoFocus
+                            tabIndex={1}
+                            autoComplete="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            disabled={processing}
+                            placeholder="Full name"
+                        />
+                        <InputError message={errors.name} className="mt-2" />
+                    </div>
 
-            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-                <Card className="w-full sm:max-w-md">
-                    <CardHeader>
-                        <CardTitle>Register</CardTitle>
-                        <CardDescription>
-                            Create a new account to get started
-                        </CardDescription>
-                    </CardHeader>
+                    <div className="grid gap-2">
+                        <Label htmlFor="email">Email address</Label>
+                        <Input
+                            id="email"
+                            type="email"
+                            required
+                            tabIndex={2}
+                            autoComplete="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            disabled={processing}
+                            placeholder="email@example.com"
+                        />
+                        <InputError message={errors.email} />
+                    </div>
 
-                    <CardContent>
-                        <form onSubmit={submit}>
-                            <div>
-                                <Label htmlFor="name">Name</Label>
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    value={data.name}
-                                    className="mt-1 block w-full"
-                                    autoComplete="name"
-                                    isFocused={true}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                />
-                                {errors.name && (
-                                    <div className="text-red-500 text-sm mt-1">{errors.name}</div>
-                                )}
-                            </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                            id="password"
+                            type="password"
+                            required
+                            tabIndex={3}
+                            autoComplete="new-password"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            disabled={processing}
+                            placeholder="Password"
+                        />
+                        <InputError message={errors.password} />
+                    </div>
 
-                            <div className="mt-4">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={data.email}
-                                    className="mt-1 block w-full"
-                                    autoComplete="username"
-                                    onChange={(e) => setData('email', e.target.value)}
-                                />
-                                {errors.email && (
-                                    <div className="text-red-500 text-sm mt-1">{errors.email}</div>
-                                )}
-                            </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                        <Input
+                            id="password_confirmation"
+                            type="password"
+                            required
+                            tabIndex={4}
+                            autoComplete="new-password"
+                            value={data.password_confirmation}
+                            onChange={(e) => setData('password_confirmation', e.target.value)}
+                            disabled={processing}
+                            placeholder="Confirm password"
+                        />
+                        <InputError message={errors.password_confirmation} />
+                    </div>
 
-                            <div className="mt-4">
-                                <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    name="password"
-                                    value={data.password}
-                                    className="mt-1 block w-full"
-                                    autoComplete="new-password"
-                                    onChange={(e) => setData('password', e.target.value)}
-                                />
-                                {errors.password && (
-                                    <div className="text-red-500 text-sm mt-1">{errors.password}</div>
-                                )}
-                            </div>
+                    <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
+                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                        Create account
+                    </Button>
+                </div>
 
-                            <div className="mt-4">
-                                <Label htmlFor="password_confirmation">Confirm Password</Label>
-                                <Input
-                                    id="password_confirmation"
-                                    type="password"
-                                    name="password_confirmation"
-                                    value={data.password_confirmation}
-                                    className="mt-1 block w-full"
-                                    autoComplete="new-password"
-                                    onChange={(e) => setData('password_confirmation', e.target.value)}
-                                />
-                                {errors.password_confirmation && (
-                                    <div className="text-red-500 text-sm mt-1">{errors.password_confirmation}</div>
-                                )}
-                            </div>
-
-                            <div className="flex items-center justify-end mt-4">
-                                <Link
-                                    href={route('login')}
-                                    className="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                >
-                                    Already registered?
-                                </Link>
-
-                                <Button
-                                    className="ml-4"
-                                    disabled={processing}
-                                >
-                                    Register
-                                </Button>
-                            </div>
-                        </form>
-                    </CardContent>
-                </Card>
-            </div>
-        </>
+                <div className="text-muted-foreground text-center text-sm">
+                    Already have an account?{' '}
+                    <TextLink href={route('login')} tabIndex={6}>
+                        Log in
+                    </TextLink>
+                </div>
+            </form>
+        </AuthLayout>
     );
 }

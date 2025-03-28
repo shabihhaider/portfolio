@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\TestimonialController;
-use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\EmailController;
 
 Route::get('/', function () {

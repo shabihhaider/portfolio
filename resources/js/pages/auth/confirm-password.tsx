@@ -41,9 +41,7 @@ export default function ConfirmPassword() {
                             autoComplete="current-password"
                             value={data.password}
                             autoFocus
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('password', e.target.value)}
-                            label="Password"
-                            error={errors.password}
+                            onChange={(e) => setData('password', e.target.value)}
                         />
 
                         <InputError message={errors.password} />
